@@ -59,7 +59,6 @@ export class ContactForm extends Component{
             this.getValues(values);
         };
         
-
         return (
             <Formik
                 initialValues={values}
