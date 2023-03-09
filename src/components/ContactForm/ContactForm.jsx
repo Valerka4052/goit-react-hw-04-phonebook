@@ -1,26 +1,14 @@
-import { Component } from "react";
 import { nanoid } from "nanoid";
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Form, Formik, Field, ErrorMessage, Label, Button } from './ContactForm.styled';
  
-export class ContactForm extends Component{
+export function ContactForm({ getStateValues, contacts }) {
 
-    static propTypes = {
-        getStateValues: PropTypes.func.isRequired,
-        contacts: PropTypes.arrayOf(
-            PropTypes.exact({
-                name: PropTypes.string.isRequired,
-                number: PropTypes.string.isRequired,
-                id: PropTypes.string.isRequired,
-            }).isRequired,
-        ).isRequired,
-    };
-
-    getValues = (inputValues) => {
+    const getValues = (inputValues) => {
         if (inputValues.name === '' || inputValues.number === '') {
             return;
-        } else if (this.props.contacts.find((contact) => {
+        } else if (contacts.find((contact) => {
             return contact.name === inputValues.name;
         })) {
             return alert(`${inputValues.name} is already in contacts`);
@@ -30,13 +18,11 @@ export class ContactForm extends Component{
                 number: inputValues.number,
                 id: nanoid(),
             };
-            this.props.getStateValues(contact);
+            getStateValues(contact);
             inputValues.name = '';
             inputValues.number = '';
             };
     };
-
-    render() {
 
         const values = {
             name: '',
@@ -56,7 +42,7 @@ export class ContactForm extends Component{
         });
 
         const submitForm = (values) => {
-            this.getValues(values);
+           getValues(values);
         };
         
         return (
@@ -73,4 +59,14 @@ export class ContactForm extends Component{
             </Formik>
         );
     };
-};
+
+    ContactForm.propTypes = {
+        getStateValues: PropTypes.func.isRequired,
+        contacts: PropTypes.arrayOf(
+            PropTypes.exact({
+                name: PropTypes.string.isRequired,
+                number: PropTypes.string.isRequired,
+                id: PropTypes.string.isRequired,
+            }).isRequired,
+        ).isRequired,
+    };
