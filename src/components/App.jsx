@@ -13,7 +13,8 @@ export function App () {
   });
   const [filter, setFilter] = useState('');
 
-   useEffect(() => {
+  useEffect(() => {
+    if (contacts === []) { return };
     localStorage.setItem("saved_contacts", JSON.stringify(contacts));
     }, [contacts]);
 
