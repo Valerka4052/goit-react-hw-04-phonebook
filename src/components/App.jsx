@@ -26,8 +26,9 @@ export function App () {
     setContacts(contacts.filter(({ id }) => id !== num));
   };
 
+  const normalizedFilter = filter.toLowerCase();
   const filteredContacts = contacts.filter(({ name }) => {
-    return name.toLowerCase().includes(filter);
+    return name.toLowerCase().includes(normalizedFilter);
   });
 
   return (
